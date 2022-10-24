@@ -17,10 +17,17 @@ class Tree {
 
     buildTree = (array, start, end) => {
         if (start > end) return null;
-        
-        let mid = (start + (end - start)) / 2;
-        console.log(array[mid]);
 
+        const mid = (start + (end - start)) / 2;
+
+        this.root = new Node(array[mid]);
+
+        let leftTree = this.buildTree(array, start, mid-1);
+        this.root.left = leftTree;
+        let rightTree = this.buildTree(array, mid+1, end);
+        this.root.right = rightTree;
+
+        return this.root;
         
     }
 }
@@ -28,3 +35,5 @@ class Tree {
 const binaryTree = new Tree(array);
 
 binaryTree.buildTree(array, 0, array.length - 1);
+
+console.log(binaryTree);
