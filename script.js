@@ -1,11 +1,11 @@
-const array = [1,2,3,4,5,6,7,8,9];
+const array = [1,2,3,4,5,6,7];
 
 class Node {
 
     constructor(data) {
         this.data = data;
-        this.left = null;
-        this.right = null;
+        this.left;
+        this.right;
     }
 }
 
@@ -15,25 +15,28 @@ class Tree {
         this.root = null;
     }
 
+    sortedArrayToBST = (array) => {
+        if (array.length === 0) return null;
+
+        return this.buildTree(array, 0, array.length-1);
+    }
+
     buildTree = (array, start, end) => {
         if (start > end) return null;
 
-        const mid = (start + (end - start)) / 2;
+        const midpoint = start + (end-start) / 2;
+        let root = new Node(array[midpoint]);
+        this.root = root;
+        this.root.left = this.buildTree(array, start, midpoint-1);
+        this.root.right = this.buildTree(array, midpoint+1, end);
 
-        this.root = new Node(array[mid]);
-
-        let leftTree = this.buildTree(array, start, mid-1);
-        this.root.left = leftTree;
-        let rightTree = this.buildTree(array, mid+1, end);
-        this.root.right = rightTree;
-
-        return this.root;
+        return root;
         
     }
 }
 
 const binaryTree = new Tree(array);
 
-binaryTree.buildTree(array, 0, array.length - 1);
+binaryTree.sortedArrayToBST(array);
 
 console.log(binaryTree);
