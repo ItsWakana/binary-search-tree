@@ -1,5 +1,3 @@
-// const array = [3,1,2];
-const arr = [38, 27, 43, 3, 9, 82, 10];
 
 class Node {
 
@@ -17,6 +15,7 @@ class Tree {
     }
 
     mergeArray = (array) => {
+
         if (array.length === 1) return array;
 
         let start = 0;
@@ -61,7 +60,7 @@ class Tree {
         return sort(left,right);
 
     }
-    
+
     buildTree = (array, start, end) => {
         
         const sorted = this.mergeArray(array);
@@ -78,8 +77,27 @@ class Tree {
 
         return root;
     }
+
+    find = (value) => {
+        let currentNode = this.root;
+
+        const findNode = (currentNode) => {
+            if (value === currentNode.data) return currentNode;
+            
+            if (value < currentNode.data) {
+                currentNode = currentNode.left;
+                return findNode(currentNode);
+            } else if (value > currentNode.data) {
+                currentNode = currentNode.right;
+                return findNode(currentNode);
+            }
+        }
+        const node = findNode(currentNode);
+        console.log(node);
+        }
 }
+const arr = [38, 27, 43, 3, 9, 82, 10];
 
 const tree = new Tree(arr);
 tree.buildTree(arr, 0, arr.length - 1);
-console.log(tree);
+tree.find(43);
