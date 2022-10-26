@@ -12,31 +12,40 @@ class Node {
 class Tree {
     constructor(array) {
         this.array = array;
-        this.root = null;
+        this.root;
     }
 
-    sortedArrayToBST = (array) => {
-        if (array.length === 0) return null;
+    buildTree = (array) => {
+        if (array.length === 1) return null;
+        
+        let start = 0;
+        let end = array.length;
 
-        return this.buildTree(array, 0, array.length-1);
-    }
+        const midpoint = Math.floor((start + end) / 2);
+        let left = [];
+        let right = [];
 
-    buildTree = (array, start, end) => {
-        if (start > end) return null;
+        for (let i=0; i<midpoint; i++) {
+            left.push(array[i]);
+        }
 
-        const midpoint = start + (end-start) / 2;
-        let root = new Node(array[midpoint]);
+        for (let i=midpoint; i<end; i++) {
+            right.push(array[i]);
+        }
+
+        const root = new Node(array[midpoint]);
+
+        root.left = this.buildTree(left);
+        root.right = this.buildTree(right);
+
         this.root = root;
-        this.root.left = this.buildTree(array, start, midpoint-1);
-        this.root.right = this.buildTree(array, midpoint+1, end);
-
+        
         return root;
         
     }
 }
 
-const binaryTree = new Tree(array);
-
-binaryTree.sortedArrayToBST(array);
+const binaryTree = new Tree(array)
+binaryTree.buildTree(array);
 
 console.log(binaryTree);
