@@ -1,11 +1,12 @@
-const array = [1,2,3,4,5,6,7];
+// const array = [3,1,2];
+const arr = [38, 27, 43, 3, 9, 82, 10];
 
 class Node {
 
     constructor(data) {
         this.data = data;
-        this.left;
-        this.right;
+        this.left = null;
+        this.right = null;
     }
 }
 
@@ -15,43 +16,63 @@ class Tree {
         this.root;
     }
 
-    // buildTree = (array) => {
-    //     if (array.length === 1) return null;
+    mergeArray = (array) => {
+        if (array.length === 1) return array;
+
+        let start = 0;
+        let end = array.length - 1;
+        let midpoint = Math.round((start + end) / 2);
+
+        const leftArray = [];
+        const rightArray = [];
+
+        for (let i=0; i<midpoint; i++) {
+            leftArray.push(array[i]);
+        }
+        for (let i=midpoint; i<=end; i++) {
+            rightArray.push(array[i]);
+        }
+
+        const sort = (l,r) => {
+            let lIndex = 0;
+            let rIndex = 0;
+            const sortedArray = [];
+
+            while (lIndex < l.length && rIndex < r.length) {
+                if (l[lIndex] <= r[rIndex]) {
+                    sortedArray.push(l[lIndex++]);
+                } else {
+                    sortedArray.push(r[rIndex++]);
+                }
+            }
+
+            for (; lIndex<l.length; lIndex++) {
+                sortedArray.push(l[lIndex]);
+            }
+            for (; rIndex<r.length; rIndex++) {
+                sortedArray.push(r[rIndex]);
+            }
+            return sortedArray;
+        }
         
-    //     let start = 0;
-    //     let end = array.length;
+        const left = this.mergeArray(leftArray);
+        const right = this.mergeArray(rightArray);
 
-    //     const midpoint = Math.floor((start + end) / 2);
-    //     let left = []; 
-    //     let right = []; 
+        return sort(left,right);
 
-    //     for (let i=0; i<midpoint; i++) {
-    //         left.push(array[i]);
-    //     }
-
-    //     for (let i=midpoint; i<end; i++) {
-    //         right.push(array[i]);
-    //     }
-
-    //     const root = new Node(array[midpoint]);
-
-    //     root.left = this.buildTree(left);
-    //     root.right = this.buildTree(right);
-
-    //     this.root = root;
-        
-    //     return root;
-        
-    // }
+    }
+    
     buildTree = (array, start, end) => {
+        
+        const sorted = this.mergeArray(array);
         if (start > end) return null;
 
         const midpoint = Math.floor((start + end) / 2);
 
-        const root = new Node(array[midpoint]);
+        const root = new Node(sorted[midpoint]);
 
-        root.left = this.buildTree(array, start, midpoint-1);
-        root.right = this.buildTree(array, midpoint+1, end);
+        root.left = this.buildTree(sorted, start, midpoint-1);
+        root.right = this.buildTree(sorted, midpoint+1, end);
 
         this.root = root;
 
@@ -59,7 +80,6 @@ class Tree {
     }
 }
 
-const binaryTree = new Tree(array)
-binaryTree.buildTree(array, 0, array.length -1);
-
-console.log(binaryTree);
+const tree = new Tree(arr);
+tree.buildTree(arr, 0, arr.length - 1);
+console.log(tree);
