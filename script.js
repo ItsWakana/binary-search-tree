@@ -97,7 +97,7 @@ class Tree {
         }
         const node = findNode(currentNode);
         return node;
-        }
+    }
 
         insert = (value) => {
             const root = new Node(value);
@@ -118,26 +118,29 @@ class Tree {
                         currentNode = currentNode.right;
                     }
             }
-            // if (value > closest.data) {
-            //     if (!closest.right) {
-            //         closest.right = root;
-            //     } else {
-            //         root.right = closest.right;
-            //         closest = root;
-            //     }
-            // }
-            // if (value < closest.data) {
-            //     if (!closest.left) {
-            //         closest.left = root;
-            //     } else {
-            //         root.left = closest.left;
-            //         closest = root;
-            //     }
-            // }
         }
 
         delete = (value) => {
             let currentNode = this.root;
+            const findNode = (currentNode) => {
+                if (!currentNode) {
+                    return 'The number does not exist in the tree';
+                }
+                if (value === currentNode.data) {
+                    console.log(currentNode);
+                    return;
+                }
+                
+                if (value < currentNode.data) {
+                    currentNode = currentNode.left;
+                    return findNode(currentNode);
+                } else if (value > currentNode.data) {
+                    currentNode = currentNode.right;
+                    return findNode(currentNode);
+                }
+            }
+            const node = findNode(currentNode);
+            return node;
 
         }
 }
@@ -145,5 +148,5 @@ class Tree {
 const arr = [1,2,3,4,5]
 const tree = new Tree(arr);
 tree.buildTree(arr, 0, arr.length - 1);
-console.log(tree.insert(6));
+console.log(tree.delete(2));
 console.log(tree);
