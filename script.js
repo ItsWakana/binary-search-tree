@@ -82,6 +82,9 @@ class Tree {
         let currentNode = this.root;
 
         const findNode = (currentNode) => {
+            if (!currentNode) {
+                return 'The number does not exist in the tree';
+            }
             if (value === currentNode.data) return currentNode;
             
             if (value < currentNode.data) {
@@ -93,11 +96,51 @@ class Tree {
             }
         }
         const node = findNode(currentNode);
-        console.log(node);
+        return node;
+        }
+
+        insert = (value) => {
+            let currentNode = this.root;
+            const findNearest = (currentNode) => {
+                if (value < currentNode.data) {
+                    if (!currentNode.left) {
+                        return currentNode;
+                    }
+                    currentNode = currentNode.left;
+                    return findNearest(currentNode);
+                } else {
+                    if (!currentNode.right) {
+                        return currentNode;
+                    }
+                    currentNode = currentNode.right;
+                    return findNearest(currentNode);
+                }
+            }
+
+            const closest = findNearest(currentNode);
+            const root = new Node(value);
+            if (value > closest.data) {
+                if (!closest.right) {
+                    closest.right = root;
+                } else {
+                    root.right = closest.right;
+                    closest = root;
+                }
+            }
+            if (value < closest.data) {
+                if (!closest.left) {
+                    closest.left = root;
+                } else {
+                    root.left = closest.left;
+                    closest = root;
+                }
+            }
         }
 }
 const arr = [38, 27, 43, 3, 9, 82, 10];
-
+// const arr = [1,2,3,4,5]
 const tree = new Tree(arr);
 tree.buildTree(arr, 0, arr.length - 1);
-tree.find(43);
+// console.log(tree.find(27));
+console.log(tree.insert(44));
+console.log(tree);
