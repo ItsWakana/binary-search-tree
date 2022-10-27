@@ -101,46 +101,47 @@ class Tree {
 
         insert = (value) => {
             let currentNode = this.root;
-            const findNearest = (currentNode) => {
+            const root = new Node(value);
+            const findLeafNode = (currentNode) => {
                 if (value < currentNode.data) {
                     if (!currentNode.left) {
-                        return currentNode;
+                        currentNode.left = root;
+                        return;
                     }
                     currentNode = currentNode.left;
-                    return findNearest(currentNode);
+                    return findLeafNode(currentNode);
                 } else {
                     if (!currentNode.right) {
-                        return currentNode;
+                        currentNode.right = root;
+                        return;
                     }
                     currentNode = currentNode.right;
-                    return findNearest(currentNode);
+                    return findLeafNode(currentNode);
                 }
             }
 
-            const closest = findNearest(currentNode);
-            const root = new Node(value);
-            if (value > closest.data) {
-                if (!closest.right) {
-                    closest.right = root;
-                } else {
-                    root.right = closest.right;
-                    closest = root;
-                }
-            }
-            if (value < closest.data) {
-                if (!closest.left) {
-                    closest.left = root;
-                } else {
-                    root.left = closest.left;
-                    closest = root;
-                }
-            }
+            findLeafNode(currentNode);
+
+            // if (value > closest.data) {
+            //     if (!closest.right) {
+            //         closest.right = root;
+            //     } else {
+            //         root.right = closest.right;
+            //         closest = root;
+            //     }
+            // }
+            // if (value < closest.data) {
+            //     if (!closest.left) {
+            //         closest.left = root;
+            //     } else {
+            //         root.left = closest.left;
+            //         closest = root;
+            //     }
+            // }
         }
 }
-const arr = [38, 27, 43, 3, 9, 82, 10];
-// const arr = [1,2,3,4,5]
+const arr = [38, 27, 43, 3, 9, 82, 10, 11];
 const tree = new Tree(arr);
 tree.buildTree(arr, 0, arr.length - 1);
-// console.log(tree.find(27));
-console.log(tree.insert(44));
+console.log(tree.insert(6));
 console.log(tree);
