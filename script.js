@@ -100,28 +100,24 @@ class Tree {
         }
 
         insert = (value) => {
-            let currentNode = this.root;
             const root = new Node(value);
-            const findLeafNode = (currentNode) => {
+            let currentNode = this.root;
+
+            while (currentNode) {
                 if (value < currentNode.data) {
                     if (!currentNode.left) {
                         currentNode.left = root;
                         return;
                     }
                     currentNode = currentNode.left;
-                    return findLeafNode(currentNode);
-                } else {
-                    if (!currentNode.right) {
-                        currentNode.right = root;
-                        return;
+                    } else {
+                        if (!currentNode.right) {
+                            currentNode.right = root;
+                            return;
+                        }
+                        currentNode = currentNode.right;
                     }
-                    currentNode = currentNode.right;
-                    return findLeafNode(currentNode);
-                }
             }
-
-            findLeafNode(currentNode);
-
             // if (value > closest.data) {
             //     if (!closest.right) {
             //         closest.right = root;
@@ -139,8 +135,14 @@ class Tree {
             //     }
             // }
         }
+
+        delete = (value) => {
+            let currentNode = this.root;
+
+        }
 }
-const arr = [38, 27, 43, 3, 9, 82, 10, 11];
+// const arr = [38, 27, 43, 3, 9, 82, 10, 11];
+const arr = [1,2,3,4,5]
 const tree = new Tree(arr);
 tree.buildTree(arr, 0, arr.length - 1);
 console.log(tree.insert(6));
