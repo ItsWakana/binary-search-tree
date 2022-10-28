@@ -122,19 +122,48 @@ class Tree {
 
         delete = (value) => {
             let currentNode = this.root;
+            let parentNode;
             const findNode = (currentNode) => {
                 if (!currentNode) {
                     return 'The number does not exist in the tree';
                 }
                 if (value === currentNode.data) {
+                    //if node to be removed is a leaf node
+                    if (currentNode.left === null && currentNode.right === null) {
+                        if (parentNode.right.data === currentNode.data) {
+                            parentNode.right = null;
+                        } else {
+                            parentNode.left = null;
+                        }
+                        return;
+                    }
+                    //if node to be removed has only one child
+                    if (currentNode.left === null || currentNode.right === null) {
+                        if (currentNode.left === null) {
+                            parentNode.right = currentNode.right;
+                            currentNode.right = null;
+                        } else if (currentNode.right === null) {
+                            parentNode.left = currentNode.left;
+                            currentNode.left = null;
+                        }
+                        return;
+                    }
+                    //last check for anything remaining that has two children
+                    // currentNode = currentNode.right;
+                    let inorderSuccessor = currentNode.right;
+                    while (inorderSuccessor.left) {
+                        inorderSuccessor = inorderSuccessor.left;
+                    }
+                    console.log(inorderSuccessor);
                     console.log(currentNode);
-                    return;
+
                 }
-                
                 if (value < currentNode.data) {
+                    parentNode = currentNode;
                     currentNode = currentNode.left;
                     return findNode(currentNode);
                 } else if (value > currentNode.data) {
+                    parentNode = currentNode;
                     currentNode = currentNode.right;
                     return findNode(currentNode);
                 }
@@ -144,9 +173,22 @@ class Tree {
 
         }
 }
-// const arr = [38, 27, 43, 3, 9, 82, 10, 11];
-const arr = [1,2,3,4,5]
+
+const prettyPrint = (node, prefix = '', isLeft = true) => {
+    if (node.right !== null) {
+      prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
+    }
+    console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
+    if (node.left !== null) {
+      prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
+    }
+}
+
+const arr = [1,2,3,4,5,6,7,20,40,80,90,76,82];
+// const arr = [38, 27, 43, 3, 9, 82, 10, 11, 26];
 const tree = new Tree(arr);
 tree.buildTree(arr, 0, arr.length - 1);
-console.log(tree.delete(2));
-console.log(tree);
+// tree.insert(8);
+// tree.insert(9);
+console.log(tree.delete(76));
+prettyPrint(tree.root);
