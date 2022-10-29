@@ -149,13 +149,33 @@ class Tree {
                         return;
                     }
                     //last check for anything remaining that has two children
-                    // currentNode = currentNode.right;
                     let inorderSuccessor = currentNode.right;
+                    let successorParent;
+                    console.log(parentNode);
                     while (inorderSuccessor.left) {
+                        successorParent = inorderSuccessor;
                         inorderSuccessor = inorderSuccessor.left;
                     }
                     console.log(inorderSuccessor);
                     console.log(currentNode);
+                    //check if the parents left or right is equal to the current node.
+                    //if it is, set the parents childs node to inordersucessor
+                    //set the inorder successor left and right equal to the currentnodes left and right.
+
+                    // if (parentNode.left === currentNode.data) {
+                    //     inorderSuccessor.left = currentNode.left;
+                    //     inorderSuccessor.right = currentNode.right;
+                    //     parentNode.left = inorderSuccessor;
+                    // } else {
+                    //     inorderSuccessor.left = currentNode.left;
+                    //     inorderSuccessor.right = currentNode.right;
+                    //     parentNode.right = inorderSuccessor;
+                    // }
+                    currentNode.data = inorderSuccessor.data;
+                    successorParent.left = null;
+
+
+
 
                 }
                 if (value < currentNode.data) {
@@ -188,7 +208,7 @@ const arr = [1,2,3,4,5,6,7,20,40,80,90,76,82];
 // const arr = [38, 27, 43, 3, 9, 82, 10, 11, 26];
 const tree = new Tree(arr);
 tree.buildTree(arr, 0, arr.length - 1);
-// tree.insert(8);
-// tree.insert(9);
-console.log(tree.delete(76));
+tree.insert(8);
+tree.insert(9);
+// console.log(tree.delete(76));
 prettyPrint(tree.root);
