@@ -1,4 +1,3 @@
-
 class Node {
 
     constructor(data) {
@@ -140,10 +139,14 @@ class Tree {
                     //if node to be removed has only one child
                     if (currentNode.left === null || currentNode.right === null) {
                         if (currentNode.left === null) {
-                            parentNode.right = currentNode.right;
+                            // parentNode.right = currentNode.right;
+                            // currentNode.right = null;
+                            currentNode.data = currentNode.right.data;
                             currentNode.right = null;
                         } else if (currentNode.right === null) {
-                            parentNode.left = currentNode.left;
+                            // parentNode.left = currentNode.left;
+                            // currentNode.left = null;
+                            currentNode.data = currentNode.left.data;
                             currentNode.left = null;
                         }
                         return;
@@ -151,13 +154,11 @@ class Tree {
                     //last check for anything remaining that has two children
                     let inorderSuccessor = currentNode.right;
                     let successorParent;
-                    console.log(parentNode);
                     while (inorderSuccessor.left) {
                         successorParent = inorderSuccessor;
                         inorderSuccessor = inorderSuccessor.left;
                     }
-                    console.log(inorderSuccessor);
-                    console.log(currentNode);
+
                     //check if the parents left or right is equal to the current node.
                     //if it is, set the parents childs node to inordersucessor
                     //set the inorder successor left and right equal to the currentnodes left and right.
@@ -171,11 +172,14 @@ class Tree {
                     //     inorderSuccessor.right = currentNode.right;
                     //     parentNode.right = inorderSuccessor;
                     // }
+
+                    if (!successorParent) {
+                        currentNode.data = currentNode.right.data;
+                        currentNode.right = null;
+                        return;
+                    }
                     currentNode.data = inorderSuccessor.data;
                     successorParent.left = null;
-
-
-
 
                 }
                 if (value < currentNode.data) {
@@ -192,6 +196,24 @@ class Tree {
             return node;
 
         }
+
+        levelOrder = (node) => {
+            let queue = [];
+            let levelOrder = [];
+            queue.push(node);
+
+            while (queue.length > 0) {
+                let shifted = queue.shift();
+                if (shifted) {
+                    // console.log(shifted.data);
+                    levelOrder.push(shifted.data);
+                    queue.push(shifted.left);
+                    queue.push(shifted.right);
+                }
+            }
+            console.log(levelOrder);
+
+        }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -205,10 +227,11 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 }
 
 const arr = [1,2,3,4,5,6,7,20,40,80,90,76,82];
-// const arr = [38, 27, 43, 3, 9, 82, 10, 11, 26];
 const tree = new Tree(arr);
 tree.buildTree(arr, 0, arr.length - 1);
-tree.insert(8);
-tree.insert(9);
+// tree.insert(8);
+// tree.insert(9);
+// tree.insert(41);
 // console.log(tree.delete(76));
-prettyPrint(tree.root);
+tree.levelOrder(tree.root);
+// prettyPrint(tree.root);
