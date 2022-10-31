@@ -197,21 +197,40 @@ class Tree {
 
         }
 
-        levelOrder = (node) => {
+        // levelOrder = (node) => {
+        //     let queue = [];
+        //     let levelOrder = [];
+        //     queue.push(node);
+
+        //     while (queue.length > 0) {
+        //         let shifted = queue.shift();
+        //         if (shifted) {
+        //             console.log(shifted.data);
+        //             levelOrder.push(shifted.data);
+        //             queue.push(shifted.left);
+        //             queue.push(shifted.right);
+        //         }
+        //     }
+        //     console.log(levelOrder);
+
+        // }
+
+        levelOrder = (callback) => {
             let queue = [];
             let levelOrder = [];
+            let node = this.root;
+            
             queue.push(node);
 
             while (queue.length > 0) {
                 let shifted = queue.shift();
                 if (shifted) {
-                    // console.log(shifted.data);
+                    callback(shifted);
                     levelOrder.push(shifted.data);
                     queue.push(shifted.left);
                     queue.push(shifted.right);
                 }
             }
-            console.log(levelOrder);
 
         }
 }
@@ -233,5 +252,5 @@ tree.buildTree(arr, 0, arr.length - 1);
 // tree.insert(9);
 // tree.insert(41);
 // console.log(tree.delete(76));
-tree.levelOrder(tree.root);
+tree.levelOrder((node) => console.log(node.data));
 // prettyPrint(tree.root);
