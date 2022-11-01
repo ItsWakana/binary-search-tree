@@ -163,17 +163,8 @@ class Tree {
                     //if it is, set the parents childs node to inordersucessor
                     //set the inorder successor left and right equal to the currentnodes left and right.
 
-                    // if (parentNode.left === currentNode.data) {
-                    //     inorderSuccessor.left = currentNode.left;
-                    //     inorderSuccessor.right = currentNode.right;
-                    //     parentNode.left = inorderSuccessor;
-                    // } else {
-                    //     inorderSuccessor.left = currentNode.left;
-                    //     inorderSuccessor.right = currentNode.right;
-                    //     parentNode.right = inorderSuccessor;
-                    // }
-
                     if (!successorParent) {
+                        console.log(currentNode);
                         currentNode.data = currentNode.right.data;
                         currentNode.right = null;
                         return;
@@ -197,24 +188,6 @@ class Tree {
 
         }
 
-        // levelOrder = (node) => {
-        //     let queue = [];
-        //     let levelOrder = [];
-        //     queue.push(node);
-
-        //     while (queue.length > 0) {
-        //         let shifted = queue.shift();
-        //         if (shifted) {
-        //             console.log(shifted.data);
-        //             levelOrder.push(shifted.data);
-        //             queue.push(shifted.left);
-        //             queue.push(shifted.right);
-        //         }
-        //     }
-        //     console.log(levelOrder);
-
-        // }
-
         levelOrder = (callback) => {
             let queue = [];
             let levelOrder = [];
@@ -225,12 +198,15 @@ class Tree {
             while (queue.length > 0) {
                 let shifted = queue.shift();
                 if (shifted) {
+                    if (callback) {
                     callback(shifted);
+                    }
                     levelOrder.push(shifted.data);
                     queue.push(shifted.left);
                     queue.push(shifted.right);
                 }
             }
+            if (!callback) return levelOrder;
 
         }
 }
@@ -248,9 +224,9 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 const arr = [1,2,3,4,5,6,7,20,40,80,90,76,82];
 const tree = new Tree(arr);
 tree.buildTree(arr, 0, arr.length - 1);
-// tree.insert(8);
-// tree.insert(9);
-// tree.insert(41);
+tree.insert(8);
+tree.insert(9);
+tree.insert(41);
 // console.log(tree.delete(76));
 tree.levelOrder((node) => console.log(node.data));
 // prettyPrint(tree.root);
