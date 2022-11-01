@@ -209,6 +209,52 @@ class Tree {
             if (!callback) return levelOrder;
 
         }
+
+        levelOrderRecursive = (callback, array) => {
+            if (array.length === 0) {
+                return array;
+            }
+
+            let shifted = array.shift();
+            if (shifted) {
+                callback(shifted);
+                array.push(shifted.left);
+                array.push(shifted.right);
+                this.levelOrderRecursive(callback, array);
+            }
+        }
+
+        inorder = (root) => {
+            if (root === null) return;
+
+            this.inorder(root.left);
+            console.log(root.data);
+            this.inorder(root.right);
+        }
+
+        // preorder = (callback, node) => {
+        //     let array = [];
+
+        //     if (node === null) return;
+        //     if (callback) {
+        //     callback(node);
+        //     }
+
+        //     array.push(node);
+        //     array = array.concat(this.preorder(callback, node.left));
+        //     array = array.concat(this.preorder(callback, node.right));
+
+        //     return array;
+        // }
+        preorder = (callback, node) => {
+            if (node === null) return;
+            if (callback) {
+            callback(node);
+            }
+            
+            this.preorder(callback, node.left);
+            this.preorder(callback, node.right);
+        }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -228,5 +274,8 @@ tree.insert(8);
 tree.insert(9);
 tree.insert(41);
 // console.log(tree.delete(76));
-tree.levelOrder((node) => console.log(node.data));
-// prettyPrint(tree.root);
+// tree.levelOrder((node) => console.log(node.data));
+// tree.preorder((node) => console.log(node), tree.root);
+tree.inorder(tree.root);
+// console.log(tree.preorder(null, tree.root));
+prettyPrint(tree.root);
