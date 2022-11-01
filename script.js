@@ -225,23 +225,6 @@ class Tree {
         }
 
         inorder = (root, callback) => {
-            
-            if (root === null) return;
-
-            this.inorder(root.left, callback);
-            if (callback) {
-                callback(root);
-            }
-            this.inorder(root.right, callback);
-            // if (!callback) {
-            //     return [...leftTree, root, ...rightTree];
-            // }
-
-            return root;
-
-        }
-
-        inorder = (root, callback) => {
             if (callback) {
                 if (root === null) return;
                 
@@ -259,20 +242,7 @@ class Tree {
                 return [...leftTree, root.data, ...rightTree]
             }
         }
-
-        // inorder = (root, callback) => {
-        //     if (root === null) return [];
-
-        //     this.inorder(root.left, callback);
-        //     if (callback) {
-        //         callback(root);
-        //     }
-        //     console.log(root);
-        //     this.inorder(root.right, callback);
-
-        //     return root;
-
-        // }
+        
         // preorder = (callback, node) => {
         //     let array = [];
 
