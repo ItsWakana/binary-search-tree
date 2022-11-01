@@ -224,14 +224,55 @@ class Tree {
             }
         }
 
-        inorder = (root) => {
+        inorder = (root, callback) => {
+            
             if (root === null) return;
 
-            this.inorder(root.left);
-            console.log(root.data);
-            this.inorder(root.right);
+            this.inorder(root.left, callback);
+            if (callback) {
+                callback(root);
+            }
+            this.inorder(root.right, callback);
+            // if (!callback) {
+            //     return [...leftTree, root, ...rightTree];
+            // }
+
+            return root;
+
         }
 
+        inorder = (root, callback) => {
+            if (callback) {
+                if (root === null) return;
+                
+                this.inorder(root.left, callback);
+                callback(root);
+                this.inorder(root.right, callback);
+
+                return root;
+            } else {
+                if (root === null) return [];
+
+                const leftTree = this.inorder(root.left);
+                const rightTree = this.inorder(root.right);
+
+                return [...leftTree, root.data, ...rightTree]
+            }
+        }
+
+        // inorder = (root, callback) => {
+        //     if (root === null) return [];
+
+        //     this.inorder(root.left, callback);
+        //     if (callback) {
+        //         callback(root);
+        //     }
+        //     console.log(root);
+        //     this.inorder(root.right, callback);
+
+        //     return root;
+
+        // }
         // preorder = (callback, node) => {
         //     let array = [];
 
@@ -276,6 +317,6 @@ tree.insert(41);
 // console.log(tree.delete(76));
 // tree.levelOrder((node) => console.log(node.data));
 // tree.preorder((node) => console.log(node), tree.root);
-tree.inorder(tree.root);
+console.log(tree.inorder(tree.root));
 // console.log(tree.preorder(null, tree.root));
-prettyPrint(tree.root);
+// prettyPrint(tree.root);
