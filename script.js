@@ -273,27 +273,7 @@ class Tree {
                     target = item;
                 }
             });
-            let targetLeft = target.left;
-            let targetRight = target.right;
 
-            let leftCount = 0;
-            let rightCount = 0;
-
-            while (targetLeft) {
-                leftCount++;
-                targetLeft = targetLeft.left;
-            }
-
-            while (targetRight) {
-                rightCount++;
-                targetRight = targetRight.right;
-            }
-
-            if (leftCount > rightCount) {
-                return leftCount;
-            } else {
-                return rightCount;
-            } 
         }
 }
 
