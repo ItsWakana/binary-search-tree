@@ -284,6 +284,10 @@ class Tree {
                 return this.getDepth(root.right, data, dpth+1);
             }
         }
+
+        isBalanced = (binaryTree) => {
+            
+        }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
