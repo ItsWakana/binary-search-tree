@@ -285,8 +285,23 @@ class Tree {
             }
         }
 
-        isBalanced = (binaryTree) => {
+        isBalanced = (root) => {
+
+            if (!root) return;
+
+            let leftHeight = this.getHeight(root.left);
+            let rightHeight = this.getHeight(root.right);
+
+            let difference = Math.abs(leftHeight - rightHeight) + 1;
             
+            if (difference > 1 ) {
+                difference = false;
+            } else {
+                difference = true;
+            }
+
+            return difference;
+
         }
 }
 
@@ -301,16 +316,19 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 }
 
 const arr = [1,2,3,4,5,6,7,20,40,80,90,76,82,91,92,93,94,95];
+// const arr = [1,2,3,4,5];
 const tree = new Tree(arr);
 tree.buildTree(arr, 0, arr.length - 1);
-tree.insert(8);
-tree.insert(9);
-tree.insert(41);
+// tree.insert(8);
+// tree.insert(9);
+// tree.insert(41);
+// tree.insert(100);
 // console.log(tree.delete(76));
 // tree.levelOrder((node) => console.log(node.data));
 // tree.preorder(tree.root, (node) => console.log(node));
 // console.log(tree.preorder(tree.root));
 // console.log(tree.preorder(null, tree.root));
 prettyPrint(tree.root);
-console.log(tree.getDepth(tree.root, 9))
-// console.log(tree.height(tree.root));
+// console.log(tree.getDepth(tree.root, 9))
+console.log(tree.isBalanced(tree.root));
+// console.log(tree.getHeight(tree.root.right));
