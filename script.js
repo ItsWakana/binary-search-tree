@@ -287,6 +287,7 @@ class Tree {
 
         isBalanced = (root) => {
 
+            //check left and right subtree lengths. Then recursively check each left and right children's height. if the difference of any of the subtrees is greater than 1, we need to return false as the tree is not balanced
             if (!root) return;
 
             let leftHeight = this.getHeight(root.left);
@@ -295,6 +296,7 @@ class Tree {
             console.log(`Left height: ${leftHeight} Right height: ${rightHeight}`);
 
             let difference = Math.abs(leftHeight - rightHeight) + 1;
+            console.log(difference);
             
             if (difference > 1 ) {
                 difference = false;
