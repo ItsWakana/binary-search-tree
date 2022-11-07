@@ -7,7 +7,7 @@ class Node {
     }
 }
 
-class Tree {
+export class Tree {
     constructor(array) {
         this.array = array;
         this.root;
@@ -311,7 +311,7 @@ class Tree {
         }
 }
 
-const prettyPrint = (node, prefix = '', isLeft = true) => {
+export const prettyPrint = (node, prefix = '', isLeft = true) => {
     if (node.right !== null) {
       prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
     }
@@ -321,22 +321,3 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
     }
 }
 
-// const arr = [1,2,3,4,5,6,7,20,40,80,90,76,82,91,92,93,94,95];
-const arr = [1,2,3,4,5];
-const tree = new Tree(arr);
-tree.buildTree(arr, 0, arr.length - 1);
-tree.insert(96)
-tree.insert(0.1);
-tree.insert(0.4);
-
-// console.log(tree.delete(76));
-// tree.levelOrder((node) => console.log(node.data));
-// tree.preorder(tree.root, (node) => console.log(node));
-// console.log(tree.preorder(tree.root));
-// console.log(tree.preorder(null, tree.root));
-prettyPrint(tree.root);
-// console.log(tree.getDepth(tree.root, 9))
-tree.rebalance();
-prettyPrint(tree.root);
-
-// console.log(tree.getHeight(tree.root.right));
