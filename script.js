@@ -287,24 +287,19 @@ class Tree {
 
         isBalanced = (root) => {
 
-            //check left and right subtree lengths. Then recursively check each left and right children's height. if the difference of any of the subtrees is greater than 1, we need to return false as the tree is not balanced
-            if (!root) return;
+            //we need to check every node on the left and right subtree and the heights of left and right subtree should not be more than 1. If its more than 1, we should return false.
+            if (!root) return true;
 
             let leftHeight = this.getHeight(root.left);
             let rightHeight = this.getHeight(root.right);
 
-            console.log(`Left height: ${leftHeight} Right height: ${rightHeight}`);
-
-            let difference = Math.abs(leftHeight - rightHeight) + 1;
-            console.log(difference);
+            let difference = Math.abs(leftHeight - rightHeight);
             
             if (difference > 1 ) {
-                difference = false;
-            } else {
-                difference = true;
-            }
+                return false;
+            } 
 
-            return difference;
+            return this.isBalanced(root.left) && this.isBalanced(root.right);
 
         }
 }
@@ -323,14 +318,9 @@ const arr = [1,2,3,4,5,6,7,20,40,80,90,76,82,91,92,93,94,95];
 // const arr = [1,2,3,4,5];
 const tree = new Tree(arr);
 tree.buildTree(arr, 0, arr.length - 1);
-tree.insert(96)
-// tree.insert(97)
-// tree.insert(98)
-tree.insert(0.1);
-tree.insert(0.4);
-// tree.insert(0.5)
-// tree.insert(0.7)
-
+// tree.insert(96)
+// tree.insert(0.1);
+// tree.insert(0.4);
 
 // console.log(tree.delete(76));
 // tree.levelOrder((node) => console.log(node.data));
